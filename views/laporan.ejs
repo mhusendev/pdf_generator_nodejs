@@ -1,0 +1,195 @@
+<!doctype html>
+<html >
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+    <style>
+        body {
+            font-size: xx-small;
+            font-family: 'Courier New', Courier, monospace;
+            
+        }
+        /* tr {
+   line-height: 2px;
+   min-height: 2px;
+   height: 2px;
+   padding: 0px;
+} */
+.table thead tr th {padding-top: 0px!important; padding-bottom: 0px!important;
+    padding-left:1px!important ; padding-right: 1px!important;
+}
+.table tbody tr td {    padding-top: 0px!important; padding-bottom: 0px!important;
+    padding-left:1px!important ; padding-right: 1px!important;
+}
+    </style>  
+  </head>
+  <body style="margin:5%; margin-top: 0%!important;">
+    <!-- <div  id="pageHeader"><img src='http://192.168.124.26/pdf-generator/assets/img/logo.png' style="border: 1px black solid;" width="200" height="200"/></div> -->
+   <div style="width:510px; height: 597px;">
+    <div class="header2" id="pageHeader" style="padding: 0%; margin-left: 2%; margin-top: -2.7%;">
+        <div class="row" style="padding-bottom:0px!important ;">
+            <div class="col-4" style="padding-top: 5.5%;">
+                <img src="http://192.168.124.26/pdf-generator/assets/img/logo.png" width="40" height="40" style="float: left; margin-right:3% ; margin: 1%;"/>
+                <h5 style="margin-left:14%; margin-top: 9%!important; color:blue; font-size: 10pt ; position: absolute;"> Cakra Wijaya Solusi</h5>
+                
+            </div>
+            <div class="col-4" style="padding-left: 0!important; padding-top: 36px!important; padding-right:10%!important;">
+                <div id="qrcode" style="float: right;"></div><br><br><br><br>
+                 <p style="text-align: right;"><b>PENAWARAN HARGA</b></p>
+                    
+                
+              </div>
+             
+             
+        </div>
+        <div class="row" style="margin-right:14%!important; margin-left:0px!important ;">
+           <div class="col-8" style="background-color: aqua;">
+            <div class="row" style="padding-left: 0px!important; padding-right: 0px!important;" >
+                <div class="col-6" style="padding-left: 0px!important;">
+                    <p style="font-size: 5pt!important;">Graha Komando, Jl. Raya Cipinang Indah No. 1, Jakarta 13420</p>
+                </div>
+                <div class="col-6" style="padding-right: 0px!important;" >
+                    <p style="text-align: right; font-size: 5pt!important;margin-top:-2% ;">email: info@cws.co.id &nbsp;&nbsp;telp: 021-29361190/99</p>
+           
+                </div>
+              </div>
+           </div>
+          </div>
+     
+          
+             
+
+    
+     <hr style="border:1px solid black; margin-top:0px!important; margin-right: 42.65%!important ;">
+    </div>
+  
+   <div class="konten" style="margin-top: 1%;">
+       <!-- baris 1 -->
+       <div class="row">
+           <div class="col-8">
+               <p>Kepada Yth,</p>
+               <p id="nama-pt" style="margin-top :-4%!important;" ><%= datas.nama %></p>
+           </div>
+           <div class="col-4" style="margin-left: 5%;">
+
+               <h7 style="font-family: 'Courier New', Courier, monospace; float: left;">Nomor &nbsp;&nbsp;:</h7> <p id="nomor-surat"> <%= datas.no_surat %></p>
+               <h7 style="font-family: 'Courier New', Courier, monospace; float: left;"> Tanggal :</h7> <p id="tanggal-surat"> <%= datas.tgl_surat %> </p>
+           </div>
+       </div>
+       <!-- baris 2 -->
+       <div class="row">
+           <div class="col-9">
+               <p style="float: left;">Perihal :</p><p id="perihal-surat"><%= datas.perihal %></p>
+               <p>Dengan hormat,</p>
+           <%- datas.isi_surat %>
+               <p>berikut kami sampaikan <b>Daftar Kuantitas dan Harga</b> sebagai berikut :</p>
+           </div>
+       </div>
+   
+   </div>
+   
+       <div class="row">
+           <div class="col-12">
+
+
+             <!-- table -->
+               <table class="table table-bordered" id="mytab">
+                   <thead>
+                       <tr>
+                           <th scope="col">Number</th>
+                           <th scope="col">Uraian</th>
+                           <th scope="col">Volume</th>
+                           <th scope="col">Satuan</th>
+                           <th scope="col">Harga Satuan</th>
+                           <th scope="col">Jumlah Harga</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                    <% for(var i=0; i < datas.barang.length; i++) { %>
+                        <tr>
+                            <td><%= i+1 %></td>
+                        
+                            <td><%= datas.barang[i].uraian %></td>
+                        
+                            <td><%= datas.barang[i].volume %></td>
+                     
+                            <td><%= datas.barang[i].satuan %></td>
+                    
+                            <td style="text-align: right;"><%= datas.barang[i].harga %></td>
+                      
+                            <td style="text-align: right;"><%= datas.barang[i].jumlah %></td>
+                        </tr>
+                  <% } %>
+                       <tr>
+                           <td colspan="5"  style="text-align: right; font-weight: bold;">
+                               Subtotal:
+                           </td>
+   
+                           <td id="subtotal" style="text-align: right;">
+                            <%= datas.subtotal %>
+                           </td>
+                       </tr>
+                       <tr>
+                           <td colspan="5"  style="text-align: right; font-weight: bold;">
+                               PPN:
+                           </td>
+                           <td id="ppn" style="text-align: right;">
+                            <%= datas.ppn %>
+                           </td>
+                       </tr>
+                       <tr>
+                           <td colspan="5" style="text-align: right; font-weight: bold;">
+                               Total:
+                           </td>
+                           <td id="totalAll" style="font-weight: bold; text-align: right;">
+                            <%= datas.total %>
+                           </td>
+                       </tr>
+                   </tbody>
+               </table>
+           </div>
+       </div>
+       <!-- syarat dan ketentuan -->
+     
+      <div class="ketentuan">
+       <div class="row"><div class="col-12">
+        <%- datas.lampiran %><br>
+           <p>Hormat Kami,<br>
+               PT. CAKRA WIJAYA SOLUSI</p>
+               <img src="http://192.168.124.26/pdf-generator/assets/img/stamp.png" width="80" height="40"/><br>
+               <p><u>ERIK M</u><br>
+                  DIREKTUR</p>
+              </div></div>
+      </div>
+     </div>
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="http://192.168.124.26/pdf-generator/assets/js/JsBarcode.all.min.js"></script>
+    <script src="http://192.168.124.26/pdf-generator/assets/js/qrcode.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
+<script>
+    $(document).ready(function() {
+        var nomor_surat = {kode_surat : document.getElementById('nomor-surat').innerHTML};
+        // new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie" );
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+    text: "http://jindo.dev.naver.com/collie",
+    width: 40,
+    height: 40,
+    colorDark : "#000000",
+    colorLight : "#ffffff",
+    correctLevel : QRCode.CorrectLevel.H
+});
+
+qrcode.makeCode(JSON.stringify(nomor_surat))
+        });
+</script> 

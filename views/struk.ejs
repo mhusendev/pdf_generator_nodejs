@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        font-size: 5pt;
+    }
+</style>
+<body >
+    <div class="pageHeader" id="pageHeader">
+        <center><b>Kasir CWS</b></center>
+        <hr>
+    </div>
+  <div class="wrap">
+      <table>
+          <tr>
+          <th>nama</th>
+          <th>jumlah</th>
+          <th>harga</th>
+          <th>Jumlah Harga</th>
+          </tr>
+          <% for(var i=0; i < datas.length; i++) { %>
+            <tr>
+            
+                <td><%= datas[i].uraian %></td>
+            
+                <td><%= datas[i].volume %></td>
+         
+        
+                <td style="text-align: right;"><%= datas[i].harga %></td>
+          
+                <td style="text-align: right;"><%= datas[i].jumlah %></td>
+            </tr>
+      <% } %>
+           <tr>
+               <td colspan="3"  style="text-align: right; font-weight: bold;">
+                   Subtotal:
+               </td>
+
+               <td id="subtotal" style="text-align: right;">
+                <%= datas.subtotal %>
+               </td>
+           </tr>
+           <tr>
+               <td colspan="3"  style="text-align: right; font-weight: bold;">
+                   PPN:
+               </td>
+               <td id="ppn" style="text-align: right;">
+                <%= datas.ppn %>
+               </td>
+           </tr>
+           <tr>
+               <td colspan="3" style="text-align: right; font-weight: bold;">
+                   Total:
+               </td>
+               <td id="totalAll" style="font-weight: bold; text-align: right;">
+                <%= datas.total %>
+               </td>
+           </tr>
+      </table>
+  </div>  
+</body>
+</html>

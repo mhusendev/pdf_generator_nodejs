@@ -1,0 +1,19 @@
+format json
+
+{
+    "pdf_name":"cws1",
+    "nama":"mhusen",
+    "isi_surat":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, .",
+    "perihal":"PENAWARAN HARGA",
+    "no_surat":"PQ-CWS-SPIE-202202022",
+    "tgl_surat":"02 Feb 2022",
+    "barang":[
+        {
+            "uraian":"Ram",
+            "volume":"2",
+            "satuan":"unit",
+            "harga":"300.000",
+            "jumlah":"600.000" 
+        }
+    ]
+}

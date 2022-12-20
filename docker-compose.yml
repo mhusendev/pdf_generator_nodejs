@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  backend-pdf:
+    image: node:8.17.0-stretch
+    container_name: pdf-generator
+    environment:
+      TZ: 'Asia/Jakarta'
+    volumes:
+      - type: volume
+        source: config
+        target: /var/nas/docker/nginx/html/pdf-generator
+        volume:
+          nocopy: true
+    working_dir: /var/nas/docker/nginx/html/pdf-generator
+    command: bash -c "npm install && node app.js"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+volumes:
+  config:
+    driver_opts:
+      type: nfs
+      o: addr=192.168.124.25,nolock,soft,rw
+      device: :/volume1/docker/nginx/html/pdf-generator
+networks:
+  default:
+    external: true
+    name: development

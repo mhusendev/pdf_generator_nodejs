@@ -1,0 +1,464 @@
+<html>
+
+<head>
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <!-- <link href="assets/summernote/summernote-lite.css" rel="stylesheet"> -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/JsBarcode.all.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- <script src="assets/summernote/summernote-lite.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <style>
+        @media print {
+            .header1 {
+                display: none;
+            }
+
+            .header2,
+            .konten,
+            .ketentuan {
+                display: block !important;
+            }
+
+            #form-inputan {
+                display: none;
+            }
+
+            .btn {
+                display: none;
+            }
+
+            p {
+                font-family: 'Courier New', Courier, monospace;
+            }
+
+            #garis-atas-tabel {
+                display: none;
+            }
+        }
+
+        p,
+        ol li {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .header2,
+        .konten,
+        .ketentuan {
+            display: none;
+        }
+    </style>
+</head>
+
+<body style="margin: 5%;">
+    <div class="header1    ">
+        <h5>
+            <center>Form Penawaran</center>
+        </h5>
+        <hr>
+    </div>
+    <div class="header2">
+        <div class="row" style="padding-bottom:0px!important ;">
+            <div class="col-md-8" style="padding-top: 1.3%;">
+                <img src="assets/img/logo.png" width="50" height="50" style="float: left;" />
+                <h3 style="margin:1.5%; color:blue"> Cakra Wijaya Solusi</h3>
+                <p>Graha Komando, Jl. Raya Cipinang Indah No. 1, Jakarta 13420</p>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <h5 style="text-align: right;"><b>PENAWARAN HARGA</b></h5>
+                    <svg id="barcode" style="width: 250px; height:25px; border:1px solid black; float:right;"></svg>
+                    <p style="text-align: right; font-size: 10.5pt!important;">📧info@cws.co.id 📞 021-29361190/99</p>
+                </div>
+            </div>
+        </div>
+        <hr style="border:1px solid black; margin-top:0px!important;">
+    </div>
+
+    <div class="konten">
+        <!-- baris 1 -->
+        <div class="row">
+            <div class="col-md-8">
+                <p>Kepada Yth,</p>
+                <p id="nama-pt">Pt.cws</p>
+            </div>
+            <div class="col-md-4">
+                <h7 style="font-family: 'Courier New', Courier, monospace; float: left;">Nomor &nbsp;&nbsp;:</h7>
+                <p id="nomor-surat"> PQ-CWS-SPIE-202202022</p>
+                <h7 style="font-family: 'Courier New', Courier, monospace; float: left;"> Tanggal :</h7>
+                <p id="tanggal-surat"> 02 Feb 2022</p>
+            </div>
+        </div>
+        <!-- baris 2 -->
+        <div class="row">
+            <div class="col-md-12">
+                <p style="float: left;">Perihal :</p>
+                <p id="perihal-surat">testing</p>
+                <p>Dengan hormat,</p>
+                <p id="isi-surat">dengan surat .</p>
+                <p>berikut kami sampaikan <b>Daftar Kuantitas dan Harga</b> sebagai berikut :</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- form input -->
+    <div class="row" id="form-inputan">
+        <div class="col-md-12 col-sm-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>
+                            tanggal :
+                        </label>
+                        <input type="date" id="tanggal" class="form-control" required />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>
+                            nomor :
+                        </label>
+                        <input type="text" id="nomor" class="form-control" required />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label>
+                            untuk :
+                        </label>
+                        <input type="text" id="untuk" class="form-control" required />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>
+                            perihal :
+                        </label>
+                        <input type="text" id="perihal" class="form-control" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    isi surat :
+                </label>
+               <div id="isi"></div>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    lampiran & syarat ketentuan :
+                </label>
+               <div id="lampiran"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- view input -->
+    <!-- Ini untuk inputan barang -->
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modaltambah">
+                Tambah
+            </button>
+            <button type="button" class="btn btn-primary" onclick="printer()">
+                Save Pdf
+            </button>
+            <button class="btn btn-secondary" onclick="window.location.href='./dashboard.html'">Kembali</button>
+            <hr id="garis-atas-tabel">
+            <table class="table table-bordered" id="mytab">
+                <thead>
+                    <tr>
+                        <th scope="col">Number</th>
+                        <th scope="col">Uraian</th>
+                        <th scope="col">Volume</th>
+                        <th scope="col">Satuan</th>
+                        <th scope="col">Harga Satuan</th>
+                        <th scope="col">Jumlah Harga</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td colspan="5" style="text-align: right; font-weight: bold;">
+                            Subtotal:
+                        </td>
+
+                        <td id="subtotal">
+                            0
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="text-align: right; font-weight: bold;">
+                            PPN:
+                        </td>
+                        <td id="ppn">
+                            0
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="text-align: right; font-weight: bold;">
+                            Total:
+                        </td>
+                        <td id="totalAll" style="font-weight: bold;">
+                            0
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- syarat dan ketentuan -->
+    <div class="ketentuan">
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    Syarat dan ketentuan:<br>
+                    <ol>
+                        <li>Harga FOB Jakarta, sudah termasuk PPN 10%</li>
+                        <li>Term of Payment 30 hari setelah barang dikirim.</li>
+                        <li>Pembayaran ditransfer ke BANK MANDIRI nomor: 006-00-1032656-3 a.n PT CAKRA WIJAYA SOLUSI
+                        </li>
+                        <li>Pembayaran sah jika dana sudah masuk kedalam rekening kami, full payment.</li>
+                        <li>Penawaran berlaku 7 hari dari tanggal surat ini</li>
+                        <li>Barang ready per hari ini dan selama persediaan masih ada, mohon konfirmasi persediaan
+                            sebelum melakukan
+                            purchase order.</li>
+                        <li>Harga belum termasuk jasa instalasi, pemasangan.</li>
+
+                    </ol>
+                    <p>Demikian surat penawaran ini kami sampaikan. Kami tunggu kabar baiknya. Atas perhatian dan
+                        kepercayaan yang diberikan, kami ucapkan terimakasih.</p>
+                </p><br>
+                <p>Hormat Kami,<br>
+                    PT. CAKRA WIJAYA SOLUSI</p>
+                <img src="assets/img/stamp.png" width="220" height="120" /><br>
+                <p><u>ERIK M</u><br>
+                    DIREKTUR</p>
+            </div>
+        </div>
+    </div>
+    <!-- Bagian Modal -->
+    <!-- modal add -->
+    <div class="modal" tabindex="-1" role="dialog" id="modaltambah">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>
+                            uraian :
+                        </label>
+                        <input type="text" id="uraian" class="form-control" />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    volume :
+                                </label>
+                                <input type="text" id="volume" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    satuan :
+                                </label>
+                                <input type="text" id="satuan" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            harga satuan (rp) :
+                        </label>
+                        <input type="text" id="harga" class="form-control" onkeyup="hitungharga()" />
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            jumlah harga (rp) :
+                        </label>
+                        <input type="text" id="jumlah" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-primary" onclick="simpanketabel()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal print -->
+
+</body>
+<script src="config.js"></script>
+<script src="verif.js"></script>
+<script>
+    
+    $(document).ready(function() {
+        $('#isi').summernote({
+        placeholder: 'Isi Surat',
+        tabsize: 2,
+        height: 100
+      });
+      $('#lampiran').summernote({
+        placeholder: 'Syarat dan Ketentuan',
+        tabsize: 2,
+        height: 100
+      });
+});
+
+    function printer() {
+
+
+        var isi_surat = $('#isi').summernote('code');
+        var lampiran = $('#lampiran').summernote('code');
+        var nomor_surat = document.getElementById('nomor').value;
+        var tgl_surat = document.getElementById('tanggal').value;
+        var perihal_surat = document.getElementById('perihal').value;
+        var penerima = document.getElementById('untuk').value;
+       let data  = {
+    pdf_name: new Date(),
+    nama:penerima,
+    isi_surat:isi_surat,
+    no_surat:nomor_surat,
+    tgl_surat:tgl_surat,
+    perihal: perihal_surat,
+    barang: data_temp
+};
+
+ console.log(data)
+        fetch(base_url + route_generate, {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                    'Content-Type': 'application/json'
+                }),
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then((res,req) => {
+                  alert("berhasil")
+            });
+
+        
+
+
+    }
+
+    var size = 0
+    var tbsize = -1
+    const temporary = new Map()
+    var total = 0;
+    let data_temp = []
+
+
+    function parseDecimal(bilangan) {
+        var number_string = bilangan.toString(),
+            sisa = number_string.length % 3,
+            rupiah = number_string.substr(0, sisa),
+            ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+        return "IDR " + rupiah
+    }
+
+
+
+    function hitungharga() {
+        var volume = document.getElementById('volume').value
+        var harga = document.getElementById('harga').value
+        document.getElementById('jumlah').value = harga * volume
+    }
+
+    function simpanketabel() {
+
+        let tmp = []
+        var uraian = document.getElementById('uraian').value
+        var volume = document.getElementById('volume').value
+        var satuan = document.getElementById('satuan').value
+        var harga = document.getElementById('harga').value
+        var jumlah = document.getElementById('jumlah').value
+        var json = {
+            "uraian": uraian,
+            "volume": volume,
+            "satuan": satuan,
+            "harga": harga,
+            "jumlah": jumlah
+        }
+        maxsize = size += 1
+        maxsize2 = tbsize += 1
+        temporary.set(json)
+
+        data_temp.push(json)
+        for (let key of temporary) {
+            tmp.push(key)
+
+
+        }
+        addRow(maxsize2, parseInt(maxsize2 + 1), tmp[maxsize2][0].uraian, tmp[maxsize2][0].volume, tmp[maxsize2][0]
+            .satuan, parseDecimal(tmp[maxsize2][0].harga), parseDecimal(tmp[maxsize2][0].jumlah))
+        total += parseInt(tmp[maxsize2][0].jumlah)
+
+        console.log(tmp)
+        document.getElementById('subtotal').innerHTML = parseDecimal(parseInt(total))
+        var potongan = total * 10 / 100
+        document.getElementById('ppn').innerHTML = parseDecimal(potongan)
+        console.log(ppn)
+        document.getElementById('totalAll').innerHTML = parseDecimal(total + potongan)
+        clear()
+    }
+
+    function addRow(rowsize, t1, t2, t3, t4, t5, t6) {
+        var table = document.getElementById('mytab').getElementsByTagName('tbody')[0];
+        var row = table.insertRow(rowsize);
+        var cell1 = row.insertCell(0)
+        var cell2 = row.insertCell(1)
+        var cell3 = row.insertCell(2)
+        var cell4 = row.insertCell(3)
+        var cell5 = row.insertCell(4)
+        var cell6 = row.insertCell(5)
+        cell1.innerHTML = t1;
+        cell2.innerHTML = t2;
+        cell3.innerHTML = t3;
+        cell4.innerHTML = t4;
+        cell5.innerHTML = t5;
+        cell6.innerHTML = t6;
+
+    }
+
+    function clear() {
+        document.getElementById('uraian').value = ""
+        document.getElementById('volume').value = ""
+        document.getElementById('satuan').value = ""
+        document.getElementById('harga').value = ""
+        document.getElementById('jumlah').value = ""
+    }
+</script>
+
+</html>

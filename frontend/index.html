@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>login page</title>
+	<style type="text/css">
+		.container {
+			height: 600px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.layer {
+            margin-top: 10%;
+			width: 300px;
+			height: 300px;
+			box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+			border-radius:10px;
+		}
+		.form-body{
+			padding: 10px;
+			padding-top:0px;
+			margin-top: 25%;
+			margin-left: 17%;
+		}
+		.form-input {
+			margin-top: 10%;
+		}
+      input:focus {
+        outline-color: none;
+        border-bottom-style: groove;
+      	border-top-style: none;
+      	border-left-style: none;
+      	border-right-style: none;
+      }
+      input {
+      	border-bottom-style:0.5px black solid;
+      	border-top-style: none;
+      	border-left-style: none;
+      	border-right-style: none;
+      	outline: none;
+      
+      }
+      input:hover {
+      	border:0.7px red solid;
+      	border-top-style: none;
+      	border-left-style: none;
+      	border-right-style: none;
+
+      }
+ 	  button {
+ 	  	background-color: #057aff;
+ 	  	color: #fff;
+ 	  	width:180px;
+ 	  	margin-top: 20px;
+ 	  	border-radius: 10px;
+ 	  	border:0px;
+ 	  	padding: 10px;
+ 	  }
+ 	  h4{
+ 	  	text-align: center;
+ 	  }
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="layer">
+			<h4>Login Page</h4>
+			<div class="form-body">
+				
+				<div class="form-input">
+					<input type="text" name="username" placeholder="Input Username" id="nama_pengguna">
+				</div>
+				<div class="form-input">
+					<input type="password" name="password" placeholder="Input password" id="kata_sandi">
+				</div>
+				<button onclick="pindah()">Login</button>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+<script src="config.js"></script>
+<script>
+
+    function pindah() {
+
+	var data = {
+		nama_pengguna : document.getElementById('nama_pengguna').value,
+		kata_sandi : document.getElementById('kata_sandi').value
+	}
+	console.log(data)
+  fetch(base_url+ route_login, {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+}).then(res => res.json())
+  .then((res)=> {
+	sessionStorage.setItem('token',res.token)
+	sessionStorage.setItem('nama', res.nama)  
+	sessionStorage.setItem('id',res.id)
+	 if (res.pesan === "Login Berhasil") {
+		 alert(res.pesan)
+     window.location.href ="./dashboard.html"
+	 }
+	
+
+  });
+        
+    }
+
+
+</script>

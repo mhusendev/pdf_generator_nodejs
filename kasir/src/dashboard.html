@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.css">
+</head>
+<body>
+    <!-- Image and text -->
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+      <!-- <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
+      KASIR APPS
+    </a>
+  </nav>
+  <div class="row" style="margin-top:3%;">
+      <div class="col-md-6 col-sm-6" style="padding: 5%; ">
+         
+
+          <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                    <label for="nama_barang">nama barang</label>
+                    <input type="text" class="form-control" id="uraian">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="nama_barang">Harga barang</label>
+                    <input type="number" class="form-control" id="harga">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="nama_barang">Total barang</label>
+                    <input type="number" min="0" class="form-control" id="volume">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="nama_barang">Diskon (%)</label>
+                    <input type="number" min="0" class="form-control" id="diskon" onkeyup="hitungharga()">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="nama_barang">Harga Total</label>
+                    <input type="number" class="form-control" id="jumlah">
+                </div>
+        
+              </div>
+              <div class="col-md-12 col-sm-12">
+                  <div class="btn-group">
+                    <button class="btn btn-secondary"onclick="simpanketabel()">Submit</button>
+                    <button class="btn btn-success" onclick="saveData()">Process</button>
+                    <button class="btn btn-danger   ">Cancel</button>
+                  </div>
+              </div>
+          </div>
+       
+        
+        
+
+      </div>
+      <div class="col-md-6 col-sm-6"  style="padding: 5%;">
+        <table class="table table-bordered" id="mytab">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Uraian</th>
+                    <th scope="col">Volume</th>
+                    <th scope="col">Harga Satuan</th>
+                    <th scope="col">Jumlah Harga</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td colspan="4" style="text-align: right; font-weight: bold;">
+                        Subtotal:
+                    </td>
+
+                    <td id="subtotal">
+                        0
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: right; font-weight: bold;">
+                        PPN:
+                    </td>
+                    <td id="ppn">
+                        0
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align: right; font-weight: bold;">
+                        Total:
+                    </td>
+                    <td id="totalAll" style="font-weight: bold;">
+                        0
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="../assets/js/bootstrap.js"></script>
+<script src="config/config.js"></script>
+<script src="../verif.js"></script>
+</html>
+<script>
+        var size = 0
+    var tbsize = -1
+    const temporary = new Map()
+    var total = 0;
+    let data_temp = []
+    function addRow(rowsize, t1, t2, t3, t4, t5, t6) {
+        var table = document.getElementById('mytab').getElementsByTagName('tbody')[0];
+        var row = table.insertRow(rowsize);
+        var cell1 = row.insertCell(0)
+        var cell2 = row.insertCell(1)
+        var cell3 = row.insertCell(2)
+        var cell4 = row.insertCell(3)
+        var cell5 = row.insertCell(4)
+       
+        cell1.innerHTML = t1;
+        cell2.innerHTML = t2;
+        cell3.innerHTML = t3;
+        cell4.innerHTML = t4;
+        cell5.innerHTML = t5;
+ 
+
+    }
+
+
+    function simpanketabel() {
+
+let tmp = []
+var uraian = document.getElementById('uraian').value
+var volume = document.getElementById('volume').value
+var harga = document.getElementById('harga').value
+var jumlah = document.getElementById('jumlah').value
+var json = {
+    "uraian": uraian,
+    "volume": volume,
+    "harga": harga,
+    "jumlah": jumlah
+}
+maxsize = size += 1
+maxsize2 = tbsize += 1
+temporary.set(json)
+
+data_temp.push(json)
+// for (let key of temporary) {
+//     tmp.push(key)
+
+
+// }
+
+addRow(maxsize2, parseInt(maxsize2 + 1), data_temp[0].uraian, data_temp[0].volume, parseDecimal(data_temp[0].harga), parseDecimal(data_temp[0].jumlah))
+total += parseInt(data_temp[0].jumlah)
+
+console.log(data_temp)
+document.getElementById('subtotal').innerHTML = parseDecimal(parseInt(total))
+var potongan = total * 10 / 100
+document.getElementById('ppn').innerHTML = parseDecimal(potongan)
+console.log(ppn)
+document.getElementById('totalAll').innerHTML = parseDecimal(total + potongan)
+clear()
+}
+function parseDecimal(bilangan) {
+        var number_string = bilangan.toString(),
+            sisa = number_string.length % 3,
+            rupiah = number_string.substr(0, sisa),
+            ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+        return "IDR " + rupiah
+    }
+    function clear() {
+        document.getElementById('uraian').value = ""
+        document.getElementById('volume').value = ""
+        document.getElementById('harga').value = ""
+        document.getElementById('jumlah').value = ""
+        document.getElementById('diskon').value = ""
+        
+    }
+
+
+ function saveData() {
+    fetch(base_url + save, {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                    'Content-Type': 'application/json'
+                }),
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
+                body: JSON.stringify(data_temp)
+            })
+            .then(res => res.json())
+            .then(alert("berhasil"));
+           window.location.href ='dashboard.html'
+
+ }
+ function hitungharga() {
+        var volume = document.getElementById('volume').value
+        var harga = document.getElementById('harga').value
+        var diskon = document.getElementById('diskon').value / 100
+        var total = harga * volume 
+        var potongan = total *diskon
+        document.getElementById('jumlah').value = total - potongan
+    }
+</script>
